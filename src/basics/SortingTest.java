@@ -1,5 +1,6 @@
 package basics;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -48,9 +49,6 @@ class QuickSort implements ISortingAlgorithm {
     }
 
 }
-
-
-
 
 class InsertSort implements ISortingAlgorithm {
 
@@ -108,16 +106,26 @@ class SelectionSort implements ISortingAlgorithm {
 
 public class SortingTest {
 
-    public static void main(String[] args) {
-
-        int[] arr = new int[100_000_000];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = (int) (Math.random() * 10000000);
+    static int[] generateArray(int length) {
+        int[] array = new int[length];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = (int) (Math.random() * 1000000);
         }
-        System.out.println(Arrays.toString(arr));
+        return array;
+    }
 
-        QuickSort qs = new QuickSort();
-        qs.sort(arr);
-        System.out.println(Arrays.toString(arr));
+    public static void main(String[] args) {
+        int[] toSort = generateArray(100000);
+        int[] another;
+        long stop, start;
+        ISortingAlgorithm[] algorithms = {new BubbleSort(), new SelectionSort(), new InsertSort(), new QuickSort()};
+        for (int i = 0; i < algorithms.length; i++) {
+            another = Arrays.copyOf(toSort, toSort.length);
+            start = System.currentTimeMillis();
+            algorithms[i].sort(another);
+            stop = System.currentTimeMillis();
+            System.out.println(algorithms[i].getClass() + ": " + (stop - start) + " ms");
+        }
+
     }
 }
