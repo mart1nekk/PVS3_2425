@@ -6,14 +6,15 @@ import java.util.Stack;
 
 public class Stacking {
     public static void main(String[] args) {
-        LinkStack stack = new LinkStack();
-        ArrayList<Integer> alsoNumbers = new ArrayList<>(10);
+        LinkStack<Integer> stack = new LinkStack<>();
+
         stack.push(8);
         stack.push(9);
         stack.push(7);
         stack.pop();
         stack.push(8);
         stack.pop();
+
 
         System.out.println(stack.pop());
         stack.push(10);
@@ -24,8 +25,8 @@ public class Stacking {
 
 }
 class ArrayStack{
-    int[] data;
-    int freeIndex;
+    private int[] data;
+    private int freeIndex;
 
     void expandArray(){
         int[] newOne = new int[data.length * 2];
@@ -64,43 +65,43 @@ class ArrayStack{
         return -1;
     }
 }
-class Link{
-    int data;
-    Link next;
+class Link<E>{
+    E data;
+    Link<E> next;
 }
-class LinkStack{
-    Link top;
+class LinkStack<E>{
+    Link<E> top;
 
     LinkStack(){
         top = null;
     }
 
-    void push(int toAdd){
+    void push(E toAdd){
         //prvni prvek:
         if (top == null){
-            top = new Link();
+            top = new Link<>();
             top.data = toAdd;
             top.next = null;//neni nutno psat explicitne
         } //uz tam neco je
         else {
-            Link newTop = new Link();
+            Link<E> newTop = new Link<>();
             newTop.data = toAdd;
             newTop.next = top; //stary vrchol bude hned za novym
             top = newTop;//prohlasim za novy vrchol
         }
     }
 
-    int pop(){
+    E pop(){
         if (top == null){
             //idealne hodit chybu
             throw new EmptyStackException();
         }
-        int toReturn = top.data;
+        E toReturn = top.data;
         top = top.next; //to, co bylo pod topem, je nyni top (nemusi tam byt nic)
         return toReturn;
     }
 
-    int peek(){
+    E peek(){
         return top.data;
     }
 
