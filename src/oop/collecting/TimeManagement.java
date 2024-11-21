@@ -1,9 +1,6 @@
 package oop.collecting;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 public class TimeManagement {
     public static void main(String[] args) {
@@ -42,6 +39,11 @@ public class TimeManagement {
         tasks.add(new Task("Reset passwords", 10));
         tasks.add(new Task("Patch security vulnerabilities", 80));
         tasks.add(new Task("Calibrate display", 30));
+
+//        for (Iterator<Task> taskIterator = tasks.iterator(); taskIterator.hasNext(); taskIterator.next()){
+//            System.out.println(taskIterator.toString());
+//        }
+
 
         System.out.println(employees);
 
