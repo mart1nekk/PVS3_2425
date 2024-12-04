@@ -77,10 +77,10 @@ class Book implements Readable{
         return IBM == book.IBM && Objects.equals(name, book.name) && Objects.equals(author, book.author) && Objects.equals(date, book.date) && Objects.equals(pages, book.pages);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, author, date, IBM, pages);
-    }
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(name, author, date, IBM, pages);
+//    }
 
     @Override
     public void read() {
