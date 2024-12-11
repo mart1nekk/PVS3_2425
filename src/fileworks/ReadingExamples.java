@@ -1,9 +1,9 @@
 package fileworks;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -39,6 +39,20 @@ public class ReadingExamples {
         }
         reader.close();
 
+
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+        String line;
+        while ((line = bufferedReader.readLine()) != null){
+            System.out.println(line);
+        }
+        bufferedReader.close();
+
+        List<String> lines = Files.readAllLines(Paths.get("data\\countries.txt"));
+        System.out.println(lines);
+        System.out.println(lines.size());
+//        for (String oneLine : lines){
+//            //parse...
+//        }
     }
 
 }
