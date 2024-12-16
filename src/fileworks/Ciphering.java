@@ -68,11 +68,31 @@ class Caesar extends Cipher{
 
     @Override
     String encrypt(String input) {
-        return null;
+        StringBuilder result = new StringBuilder();
+        String alphabet = "abcdefghijklmnopqrstuvwxyz";
+        String lowerMessage = input.toLowerCase();
+        for (int i = 0; i < input.length(); i++) {
+            if (Character.isAlphabetic(lowerMessage.charAt(i))){
+                int position = alphabet.indexOf(lowerMessage.charAt(i));
+                if (position + key >= alphabet.length()){
+                    result.append(alphabet.charAt(position + key - alphabet.length()));
+                } else {
+                    result.append(alphabet.charAt(position + key));
+                }
+            } else {
+                result.append(lowerMessage.charAt(i));
+            }
+        }
+
+        return result.toString();
     }
 
     @Override
     String decrypt(String encryptedInput) {
-        return null;
+        int tmp = key;
+        key = 26 - key;
+        String result = encrypt(encryptedInput);
+        key = tmp;
+        return result;
     }
 }
