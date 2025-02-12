@@ -26,6 +26,7 @@ public class LambdaBasics  {
         Texting world = whom -> System.out.println("Hello " + whom);
         world.hello("World");
 
+
         Zero z = () -> System.out.println("Tohle nic nedela...");
         z.print();
 
