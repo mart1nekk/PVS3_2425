@@ -3,6 +3,7 @@ package streaming;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 public class LambdaBasics  {
@@ -14,6 +15,7 @@ public class LambdaBasics  {
             public double quadratic(double a) {
                 return a*a;
             }
+
         };
 
         //prijme a, vrati a*a
@@ -23,7 +25,10 @@ public class LambdaBasics  {
         Operations addition = (a, b) -> a+b;
         Operations multiplication = (a, b) -> a*b;
 
-        Texting world = whom -> System.out.println("Hello " + whom);
+        Texting world = whom -> {
+            System.out.println("Hello");
+            System.out.println(whom);
+        };
         world.hello("World");
 
 

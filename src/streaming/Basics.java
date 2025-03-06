@@ -1,53 +1,53 @@
 package streaming;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.stream.Stream;
 
-public class StreamBasics {
-
+public class Basics {
     public static void main(String[] args) {
         ArrayList<Integer> numbers = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             numbers.add((int)(Math.random() * 100));
         }
-
         System.out.println(numbers);
 
+        System.out.println("Size: " + numbers.size());
         int size = (int) numbers.stream()
                 .count();
-        System.out.println("Size alternativne: " + size);
 
-        int size2 = (int) numbers.stream()
-                .distinct()
+        int uniques = (int) numbers.stream()
+                .distinct() //COUNT DISTINCT
                 .count();
-        System.out.println("Unikatnich: " + size2);
 
-        int upper = (int) numbers.stream()
+        System.out.println("Unikatnich: " + uniques);
+
+        int uniquesUpper = (int) numbers.stream()
+                .distinct()
                 .filter(num -> num > 50)
-                .distinct()
                 .count();
 
         numbers.stream()
-                .filter(num -> num % 2 == 0)
+                .filter(number -> number % 2 == 0)
                 .forEach(System.out::println);
 
-        numbers.stream()
-                .sorted(Comparator.reverseOrder())
-                .forEach(System.out::println);
-        //alternativni
         numbers.stream()
                 .sorted(Integer::compare)
                 .forEach(System.out::println);
 
-//        String[] array = {"Bořek","Jarmil", "Vysavač", "Řehoř", "Výjimka" };
-//        Stream.of(array)
-//                .sorted(Comparator.comparingInt(str -> (char) (str.length() - 1)))
-//                .forEach(System.out::println);
+        String[] names = {"Ludmila", "Anastasia", "Jarmil", "Řehoř", "Jonáš"};
+        Stream.of(names)
+                .sorted(Comparator.comparingInt(String::length))
+                .forEach(System.out::println);
 
         double average = numbers.stream()
                 .mapToDouble(Integer::doubleValue)
                 .average()
                 .orElse(0);
+
+        System.out.println("Average: " + average);
     }
+
 }
