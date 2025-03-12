@@ -64,14 +64,45 @@ public class PaymentDataGenerator {
         payments.forEach(System.out::println);
 
         //vypsat vsechny completed platby
+        payments.stream()
+                .filter(p -> p.getStatus().equals("Completed"))
+                .forEach(System.out::println);
 
         //Vypsat vsechny platby ve vysi alespon 200 $ a seradit dle data
+        payments.stream()
+                .filter(p -> p.getAmount() >= 200)
+                .sorted(Comparator.comparing(Payment::getTransactionDate))
+                .forEach(System.out::println);
+
 
         //vypsat prumernou vysi platby od uzivatele U003
+        double averageAmount = payments.stream()
+                .filter( p -> p.getUserId().equals("U003"))
+                .mapToDouble(Payment::getAmount)
+                .average()
+                .orElse(0);
 
         //vypsat celkovy pocet plateb pro uzivatele U003
+        System.out.println(
+                payments.stream()
+                        .filter( p ->  p.getUserId().equals("U003"))
+                        .count()
+        );
 
         //vypsat celkovy soucet vsech plateb v kategorii Entertainment
+        System.out.println(
+                payments.stream()
+                        .filter(p -> p.getCategory().equals("Entertainment"))
+                        .mapToDouble(Payment::getAmount)
+                        .sum()
+        );
+
+
+        //zajimavost: statistiky k platbam:
+
+//        System.out.println(payments.stream()
+//                .mapToDouble(Payment::getAmount)
+//                .summaryStatistics().toString());
 
         //vypsat celkovou sumu, ktera je pending za posledni tyden
     }
