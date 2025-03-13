@@ -18,6 +18,7 @@ public class TimePractice {
         LocalTime from = LocalTime.from(lessonStart);
 //        System.out.println(from);
 
+
         LocalTime constants = LocalTime.NOON;
         System.out.println(constants);
 
