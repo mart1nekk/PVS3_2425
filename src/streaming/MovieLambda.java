@@ -41,7 +41,11 @@ public class MovieLambda {
                     .mapToDouble(movie -> movie.rating)
                     .average()
                     .orElse(0);
-            
+
+            System.out.println( movies.stream()
+                    .mapToDouble(Movie::getRating)
+                    .summaryStatistics());
+
             List<Movie> actionMovies = movies.stream()
                     .filter(movie -> movie.genre.equals("Action") && movie.year > 2000)
                     .distinct()
