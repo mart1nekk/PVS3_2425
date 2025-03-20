@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MovieReviews {
-    static class Movie{
+    static class Movie {
         private int movieID;
         private String title;
         private String genre;
@@ -41,7 +42,7 @@ public class MovieReviews {
         }
     }
 
-    static class Rating{
+    static class Rating {
         private int movieID;
         private double rating;
 
@@ -75,17 +76,55 @@ public class MovieReviews {
         List<Rating> ratings = Files.lines(Paths.get("data\\reviews\\ratings.csv"))
                 .skip(1)
                 .map(line -> line.split(","))
-                .map( parts -> new Rating(
+                .map(parts -> new Rating(
                         Integer.parseInt(parts[1].trim()),
                         Double.parseDouble(parts[2].trim())
                 ))
                 .toList();
         System.out.println("Recenzi nacteno: " + ratings.size());
 
-        //namapovat
-        //namapovat znovu
-        //jednotlive vypocitat prumery
-        //vypsat random 10 filmu i s ratingem
-        //vypsat prumerny rating pro kategorii
+        //Terribly BAD IDEA:
+        int count;
+        double sum;
+        long start = System.currentTimeMillis();
+        for (Movie m : movies) {
+            count = 0;
+            sum = 0;
+            for (Rating r : ratings) {
+                if (r.movieID == m.movieID) {
+                    count++;
+                    sum += r.rating;
+                }
+            }
+            m.setRating((sum / count));
+        }
+        long stop = System.currentTimeMillis();
+        System.out.println("Duration: " + (stop - start) + " ms");
+        System.out.println(movies.get(0).getRating());
+        System.out.println(movies.get(movies.size() - 1).getRating());
+
+        movies.forEach(movie -> movie.setRating(Double.NaN));
+
+
+        start = System.currentTimeMillis();
+        Map<Integer, List<Double>> ratingsMap = ratings.stream()
+                .collect(Collectors.groupingBy(
+                        Rating::getMovieID,
+                        Collectors.mapping(Rating::getRating, Collectors.toList())
+                ));
+
+        movies.forEach(movie -> {
+            List<Double> movieRatings = ratingsMap.get(movie.getMovieID());
+            if (movieRatings != null && !movieRatings.isEmpty()) {
+                double avg = movieRatings.stream()
+                        .mapToDouble(Double::doubleValue)
+                        .average()
+                        .orElse(Double.NaN);
+                movie.setRating(avg);
+            }
+        });
+        stop = System.currentTimeMillis();
+        System.out.println("Map duration: " + (stop - start) + " ms");
+//        movies.forEach(m -> System.out.println(m.getTitle() + ": " + m.getRating()));
     }
 }
