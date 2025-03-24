@@ -84,29 +84,29 @@ public class MovieReviews {
         System.out.println("Recenzi nacteno: " + ratings.size());
 
         //Terribly BAD IDEA:
-        int count;
-        double sum;
+//        int count;
+//        double sum;
+//        long start = System.currentTimeMillis();
+//        for (Movie m : movies) {
+//            count = 0;
+//            sum = 0;
+//            for (Rating r : ratings) {
+//                if (r.movieID == m.movieID) {
+//                    count++;
+//                    sum += r.rating;
+//                }
+//            }
+//            m.setRating((sum / count));
+//        }
+//        long stop = System.currentTimeMillis();
+//        System.out.println("Duration: " + (stop - start) + " ms");
+//        System.out.println(movies.get(0).getRating());
+//        System.out.println(movies.get(movies.size() - 1).getRating());
+//
+//        movies.forEach(movie -> movie.setRating(Double.NaN));
+
+
         long start = System.currentTimeMillis();
-        for (Movie m : movies) {
-            count = 0;
-            sum = 0;
-            for (Rating r : ratings) {
-                if (r.movieID == m.movieID) {
-                    count++;
-                    sum += r.rating;
-                }
-            }
-            m.setRating((sum / count));
-        }
-        long stop = System.currentTimeMillis();
-        System.out.println("Duration: " + (stop - start) + " ms");
-        System.out.println(movies.get(0).getRating());
-        System.out.println(movies.get(movies.size() - 1).getRating());
-
-        movies.forEach(movie -> movie.setRating(Double.NaN));
-
-
-        start = System.currentTimeMillis();
         Map<Integer, List<Double>> ratingsMap = ratings.stream()
                 .collect(Collectors.groupingBy(
                         Rating::getMovieID,
@@ -123,7 +123,7 @@ public class MovieReviews {
                 movie.setRating(avg);
             }
         });
-        stop = System.currentTimeMillis();
+       long stop = System.currentTimeMillis();
         System.out.println("Map duration: " + (stop - start) + " ms");
 //        movies.forEach(m -> System.out.println(m.getTitle() + ": " + m.getRating()));
     }
