@@ -102,6 +102,8 @@ public class BookTask {
                         parsed[2]
                 )).toList();
 
+        
+
         List<Chapter> chapters = Files.lines(Paths.get("data\\chapters.csv"))
                 .skip(1)
                 .map(line -> line.split(",", 4))
