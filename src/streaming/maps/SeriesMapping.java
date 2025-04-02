@@ -5,9 +5,24 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class SeriesMapping {
+
+    static void printStructure(List<Series> series){
+        series.forEach(s -> {
+            System.out.println(s.getTitle());
+
+            Map<Integer, List<Episode>> seasonsMap = s.getEpisodes().stream()
+                    .collect(Collectors.groupingBy(Episode::getSeason));
+
+            seasonsMap.forEach((season, episode) -> {
+                System.out.println("\tS: " + season);
+                episode.forEach(e -> System.out.println("\t\t" + e.toString()));
+            });
+        });
+    }
 
     public static void main(String[] args) throws IOException {
         List<Series> seriesList = Files.lines(Paths.get("data\\series.csv"))
@@ -28,6 +43,21 @@ public class SeriesMapping {
                         Double.parseDouble(parts[2]),
                         parts[3]
                 )).toList();
+
+        seriesList.forEach(series -> {
+            episodeList.stream()
+                    .filter(episode -> episode.getEpisodeID().equals(series.getSeriesID()))
+                    .forEach(series::addEpisode);
+            //alt
+//           series.episodes =  episodeList.stream()
+//                    .filter(episode -> episode.getEpisodeID().equals(series.getSeriesID()))
+//                   .toList();
+        });
+
+//        System.out.println(seriesList);
+
+        //vypis v tree podobe
+        printStructure(seriesList);
     }
 }
 
@@ -39,6 +69,11 @@ class Series {
         this.seriesID = seriesID;
         this.title = title;
         episodes = new ArrayList<>();
+    }
+
+    @Override
+    public String toString() {
+        return getTitle() + ": " + getEpisodes().toString();
     }
 
     void addEpisode(Episode episode) {
@@ -86,6 +121,11 @@ class Episode {
 
     public double getRating() {
         return rating;
+    }
+
+    @Override
+    public String toString() {
+        return "S:" + getSeason() + " Ep: " + getEpisodeNumber() + ": " + getRating();
     }
 }
 
