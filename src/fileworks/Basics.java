@@ -8,6 +8,7 @@ public class Basics {
 
     static void tree(String filepath){
         File f = new File(filepath);
+
         if (f.exists()){
             if (f.isDirectory()){
                 System.out.println(f.getPath());
@@ -21,6 +22,7 @@ public class Basics {
         } else {
             System.out.println("Wrong tree call!");
         }
+
     }
     public static void main(String[] args) {
         File file = new File("src\\exams\\GreatTale.java");

@@ -8,6 +8,7 @@ public class Basics {
     public static void main(String[] args) {
         HashMap<String, String> countries = new HashMap<>();
 
+        //nasypani mapy
         countries.put("USA", "Washington DC");
         countries.put("Germany", "Berlin");
         countries.put("Finland", "Helsinki");
